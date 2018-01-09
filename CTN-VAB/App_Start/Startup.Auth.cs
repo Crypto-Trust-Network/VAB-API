@@ -26,44 +26,27 @@ namespace CTN_VAB
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
 
-            // Enable the application to use a cookie to store information for the signed in user
-            // and to use a cookie to temporarily store information about a user logging in with a third party login provider
-            app.UseCookieAuthentication(new CookieAuthenticationOptions());
-            app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
-
             // Configure the application for OAuth based flow
             PublicClientId = "self";
+
+            bool https = true; //Production is https only
+
+#if DEBUG
+            https = false; //In debug we allow http calls
+#endif
+
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
-                TokenEndpointPath = new PathString("/Token"),
+                TokenEndpointPath = new PathString("/api/Account/Token"),
                 Provider = new ApplicationOAuthProvider(PublicClientId),
                 AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
-                // In production mode set AllowInsecureHttp = false
-                AllowInsecureHttp = true
+                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(4), //Roles need to update often
+                AllowInsecureHttp = !https,
+                RefreshTokenProvider = new ApplicationRefreshTokenProvider()
             };
 
             // Enable the application to use bearer tokens to authenticate users
             app.UseOAuthBearerTokens(OAuthOptions);
-
-            // Uncomment the following lines to enable logging in with third party login providers
-            //app.UseMicrosoftAccountAuthentication(
-            //    clientId: "",
-            //    clientSecret: "");
-
-            //app.UseTwitterAuthentication(
-            //    consumerKey: "",
-            //    consumerSecret: "");
-
-            //app.UseFacebookAuthentication(
-            //    appId: "",
-            //    appSecret: "");
-
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
         }
     }
 }

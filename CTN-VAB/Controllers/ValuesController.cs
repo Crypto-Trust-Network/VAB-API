@@ -7,6 +7,7 @@ using System.Web.Http;
 
 namespace CTN_VAB.Controllers
 {
+    [Route("api/values")]
     [Authorize]
     public class ValuesController : ApiController
     {
