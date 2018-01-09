@@ -12,7 +12,7 @@ namespace CTN_VAB.Migrations
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(CTN_VAB.Models.ApplicationDbContext context)
+        protected override void Seed(Models.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
