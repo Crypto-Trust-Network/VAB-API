@@ -16,6 +16,14 @@ namespace CTN_VAB.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        public ApplicationUser() { }
+
+        public ApplicationUser(string email)
+        {
+            Email = email;
+            UserName = email;
+        }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
