@@ -235,6 +235,9 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Shared\BaseModel.cs" />
+    <Compile Include="Models\Verifications\Verification.cs" />
+    <Compile Include="Models\Wallets\Wallet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Providers\ApplicationRefreshTokenProvider.cs" />
